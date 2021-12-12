@@ -11,8 +11,8 @@ from ControlPanelClient.ControlPanelButton import ControlPanelButton
 from RPi import GPIO
 import time
 import logging
-from FhaCommon.MessageBus import MessageBus
-from FhaCommon import JsonConfigurationReader
+from FhaMessageBus.MessageBus import MessageBus
+from FhaCommon.Utility import JsonConfigurationReader
 from ControlPanelClient.ControlPanel import ControlPanel
 
 GPIO.setmode(GPIO.BCM)

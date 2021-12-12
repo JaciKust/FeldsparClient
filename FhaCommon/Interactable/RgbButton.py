@@ -3,9 +3,8 @@ import time
 from datetime import datetime
 
 from RPi import GPIO
-from FhaCommon.Constants import Button as ButtonConstant
-from FhaClient import PwmHat
-from FhaCommon import Color
+from FhaCommon.Constants import Button as ButtonConstant, Color
+from FhaCommon.Interactable import PwmHat
 from events import Events
 
 

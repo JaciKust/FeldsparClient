@@ -22,16 +22,6 @@ class MessageBus:
         self.request_retries = request_retries
 
         self.context = zmq.Context()
-        # self.incoming_socket = self.context.socket(zmq.SUB)
-        # self.incoming_socket.connect(
-        #     "tcp://{}:{}".format(
-        #         '192.168.0.100',#self.outgoing_ip,
-        #         '5555', #self.outgoing_port
-        #     )
-        # )
-        #
-        # #zip_filter = sys.argv[1] if len(sys.argv) > 1 else "10001"
-        # self.incoming_socket.setsockopt_string(zmq.SUBSCRIBE, 'A')
 
         self.incoming_socket = zmq.Context().socket(zmq.SUB)
         self.incoming_socket.connect("tcp://192.168.0.100:5557")
@@ -67,40 +57,15 @@ class MessageBus:
                 time.sleep(0.2)
         except:
             print("damn")
-        # def __init__(self):
-        #     context = zmq.Context()
-        #     socket = context.socket(zmq.SUB)
-        #
-        #     print("Collecting updates from weather server...")
-        #     socket.connect("tcp://192.168.0.100:5556")
-        #
-        #     # Subscribe to zipcode, default is NYC, 10001
-        #     zip_filter = sys.argv[1] if len(sys.argv) > 1 else "10001"
-        #     socket.setsockopt_string(
-        #         zmq.SUBSCRIBE, 'A'
-        #     )
-        #
-        #     # Process 5 updates
-        #     total_temp = 0
-        #     for update_nbr in range(5):
-        #         string = socket.recv_string()
-        #         zipcode, temperature, relhumidity = string.split()
-        #         print("Recieved")
-        #         total_temp += int(temperature)
-        #
-        #     print((f"Average temperature for zipcode "
-        #            f"'{zip_filter}' was {total_temp / (update_nbr + 1)} F"))
 
     def send(self, data):
-        print("Sending!!!! " + str(data))
         data = json.dumps(data.__dict__)
         logging.info("Connecting to server…")
         client = self.context.socket(zmq.REQ)
-        print("Senting on ZMQ?E?")
         client.connect("tcp://{}:{}".format(self.outgoing_ip, self.outgoing_port))
 
         request = str(data).encode()
-        #logging.info("Sending (%s)", request)
+        logging.info("Sending (%s)", request)
         client.send(request)
 
         retries_left = self.request_retries

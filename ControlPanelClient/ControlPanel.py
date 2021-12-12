@@ -1,6 +1,6 @@
 from events import Events
 
-from FhaCommon import ControlPanelState
+from ControlPanelClient import ControlPanelState
 
 
 class ControlPanel:

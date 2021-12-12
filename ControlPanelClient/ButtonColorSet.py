@@ -1,4 +1,5 @@
-from FhaCommon import Color, ControlPanelState
+from FhaCommon.Constants import Color
+from ControlPanelClient import ControlPanelState
 
 
 class ButtonColorSet:

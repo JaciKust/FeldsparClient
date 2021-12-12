@@ -1,7 +1,7 @@
 from events import Events
 
-from FhaCommon import ControlPanelState
-from FhaClient.RgbButton import RgbButton
+from ControlPanelClient import ControlPanelState
+from FhaCommon.Interactable.RgbButton import RgbButton
 
 
 class ControlPanelButton(RgbButton):

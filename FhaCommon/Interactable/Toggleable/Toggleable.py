@@ -3,26 +3,44 @@ import threading
 from datetime import timedelta, datetime
 
 from FhaDataAccess import DatabaseState
-from FhaDataAccess.TimeStampedState import TimeStampedState
-from FhaServer.Interactable.ToggleableOnTimeCalculator import ToggleableOnTimeCalculator
+from FhaCommon.Interactable.Toggleable.TimeStampedState import TimeStampedState
+from FhaCommon.Utility.ToggleableOnTimeCalculator import ToggleableOnTimeCalculator
 from FhaDataAccess.MarraQueryMaker import MarraQueryMaker
-from FhaCommon.Toggleable import Toggleable
 
 
-class DatabaseToggleable(Toggleable):
+class Toggleable:
     def __init__(self, database_id, max_time_on=None):
-        super().__init__()
         self.database_id = database_id
         self.maker = MarraQueryMaker.getInstance()
         self.max_time_on = max_time_on
 
+    _is_on = False
+
     def _execute_set_on(self):
-        thread = threading.Thread(target=self._update_database, args=(DatabaseState.ON,))
-        thread.start()
+        pass
 
     def _execute_set_off(self):
-        thread = threading.Thread(target=self._update_database, args=(DatabaseState.OFF,))
-        thread.start()
+        pass
+
+    def set_on(self):
+        try:
+            self._execute_set_on()
+            self._is_on = True
+        except:
+            pass
+        else:
+            thread = threading.Thread(target=self._update_database, args=(DatabaseState.ON,))
+            thread.start()
+
+    def set_off(self):
+        try:
+            self._execute_set_off()
+            self._is_on = False
+        except:
+            pass
+        else:
+            thread = threading.Thread(target=self._update_database, args=(DatabaseState.OFF,))
+            thread.start()
 
     def soft_set_on(self):
         if self.max_time_on is not None and self.get_time_in_toggleable_state() > self.max_time_on:
@@ -36,6 +54,12 @@ class DatabaseToggleable(Toggleable):
 
     def set_on_if_under_max_time(self):
         if self.max_time_on is not None and self.get_time_in_toggleable_state() < self.max_time_on:
+            self.set_on()
+
+    def toggle(self):
+        if self._is_on:
+            self.set_off()
+        else:
             self.set_on()
 
     def get_time_in_toggleable_state(self):
@@ -74,8 +98,11 @@ class DatabaseToggleable(Toggleable):
         finally:
             pass
 
+    def get_is_on(self):
+        return self._is_on
+
     def write_current_state_to_database(self):
-        if (self._is_on):
+        if self._is_on:
             state = DatabaseState.ON
         else:
             state = DatabaseState.OFF

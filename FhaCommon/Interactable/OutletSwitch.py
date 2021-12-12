@@ -4,7 +4,7 @@ import time
 from RPi import GPIO
 
 from FhaCommon.Constants import Transmitter as TransmitterConstant
-from FhaCommon.Interactable.Toggleable import Toggleable
+from FhaCommon.Interactable.Toggleable.Toggleable import Toggleable
 
 
 class TransmitterLock:

@@ -1,6 +1,8 @@
+import time
+
 from RPi import GPIO
 
-from FhaCommon.Interactable.Toggleable import Toggleable
+from FhaCommon.Interactable.Toggleable.Toggleable import Toggleable
 
 
 class Relay(Toggleable):
@@ -17,3 +19,11 @@ class Relay(Toggleable):
     def _execute_set_off(self):
         GPIO.output(self.pin, GPIO.HIGH)
         self.is_on = False
+
+    def pulse(self):
+        try:
+            self.set_on()
+            time.sleep(0.1)
+        finally:
+            self.set_off()
+        self.set_off()
