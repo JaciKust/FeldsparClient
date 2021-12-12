@@ -1,9 +1,9 @@
-from FhaDataObjects.NamedDataObject import NamedDataObject
+from FhaDataObjects.DataObjectBase import DataObjectBase
 
 
-class ButtonPressedDataObject(NamedDataObject):
+class DataObjectButtonPressed(DataObjectBase):
     def __init__(self, buttonName, group, category, triggerPin, buttonPressTime):
-        super().__init__("ButtonPressedDataObject")
+        super().__init__("DataObjectButtonPressed")
         self.ButtonName = buttonName
         self.Group = group
         self.Category = category

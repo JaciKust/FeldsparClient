@@ -3,7 +3,7 @@ import os
 
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from FhaDataObjects.ButtonPressedDataObject import ButtonPressedDataObject
+from FhaDataObjects.DataObjectButtonPressed import DataObjectButtonPressed
 
 from ControlPanelClient import ButtonColorSet
 from ControlPanelClient.ControlPanelButton import ControlPanelButton
@@ -19,6 +19,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
+
 
 class Runner:
     def __init__(self):
@@ -60,7 +61,7 @@ class Runner:
             return ButtonColorSet.SPECIAL_BUTTON_COLOR_SET
 
     def _send_button_click_to_server(self, name, group, category, trigger_pin, button_press_time, control_panel_name):
-        button_click_event = ButtonPressedDataObject(
+        button_click_event = DataObjectButtonPressed(
             name,
             group,
             category,
