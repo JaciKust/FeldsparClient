@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="Chaise" autoUploadExternalChanges="true">
+  <component name="PublishConfigData" autoUpload="Always" serverName="Hoya" autoUploadExternalChanges="true">
     <serverData>
       <paths name="Aril">
         <serverdata>
@@ -68,7 +68,7 @@
       <paths name="Hoya">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/Projects/FeldsparClient" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

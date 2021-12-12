@@ -3,7 +3,7 @@ import time
 
 from RPi import GPIO
 
-from FhaCommon.Constants import Transmitter as TransmitterConstant
+from Transmitter433Client.Constants import Transmitter as TransmitterConstant
 from FhaCommon.Interactable.Toggleable.Toggleable import Toggleable
 
 

@@ -11,7 +11,7 @@ from events import Events
 
 
 class MessageBus:
-    def __init__(self, outgoing_ip, incoming_ip, incoming_port, outgoing_port, request_timeout, request_retries):
+    def __init__(self, outgoing_ip, incoming_ip, incoming_port, outgoing_port, request_timeout, request_retries, topic):
         logging.info('Starting Message bus')
 
         self.outgoing_ip = outgoing_ip
@@ -25,11 +25,12 @@ class MessageBus:
 
         self.incoming_socket = zmq.Context().socket(zmq.SUB)
         self.incoming_socket.connect("tcp://192.168.0.100:5557")
-        self.incoming_socket.setsockopt_string(zmq.SUBSCRIBE, 'A')
+        self.incoming_socket.setsockopt_string(zmq.SUBSCRIBE, topic)
 
         self.server_events = Events()
         self.socket_thread = threading.Thread(target=self.run_message_server)
         self.socket_thread.start()
+        self.topic = topic
 
     def __del__(self):
         self.continue_message_server = False
@@ -45,7 +46,7 @@ class MessageBus:
                 #  Wait for next request from client
                 message = self.incoming_socket.recv()
                 if message != b"ack":
-                    if message == b'A':
+                    if message == bytes(self.topic, 'utf-8'):
                         continue
                     logging.info("Received request: %s" % message)
                     # self.incoming_socket.send(b"ack")
